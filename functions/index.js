@@ -4,6 +4,20 @@ const express = require("express");
 admin.initializeApp();
 const app = express();
 
+const config = {
+  apiKey: "AIzaSyC4DzcXiZmbv6OtsCX3boPBd2YDRFzzoIA",
+  authDomain: "socialmedia-1638a.firebaseapp.com",
+  databaseURL: "https://socialmedia-1638a.firebaseio.com",
+  projectId: "socialmedia-1638a",
+  storageBucket: "socialmedia-1638a.appspot.com",
+  messagingSenderId: "441693890335",
+  appId: "1:441693890335:web:de3c06ca422ac282bff22a",
+  measurementId: "G-FENVX6D0QN"
+};
+
+const firebase = require("firebase");
+firebase.initializeApp(config);
+
 app.get("/screams", (req, res) => {
   admin
     .firestore()
