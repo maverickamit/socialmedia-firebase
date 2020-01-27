@@ -8,11 +8,17 @@ app.get("/screams", (req, res) => {
   admin
     .firestore()
     .collection("screams")
+    .orderBy("createdAt", "desc")
     .get()
     .then(response => {
       let screams = [];
       response.forEach(item => {
-        screams.push(item.data());
+        screams.push({
+          screamId: item.id,
+          body: item.data().body,
+          userHandle: item.data().userHandle,
+          createdAt: item.data().createdAt
+        });
       });
       return res.json(screams);
     })
@@ -25,7 +31,7 @@ app.post("/scream", (req, res) => {
   const newScream = {
     body: req.body.body,
     userHandle: req.body.userHandle,
-    createdAt: admin.firestore.Timestamp.fromDate(new Date())
+    createdAt: new Date().toISOString()
   };
 
   admin
@@ -41,4 +47,4 @@ app.post("/scream", (req, res) => {
     });
 });
 
-exports.api = functions.https.onRequest(app);
+exports.api = functions.region("asia-south1").https.onRequest(app);
