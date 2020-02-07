@@ -1,7 +1,13 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const express = require("express");
-admin.initializeApp();
+var serviceAccount = require("../socialmedia-1638a-firebase-adminsdk-6tkkw-7cbaebf33b.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://socialmedia-1638a.firebaseio.com"
+});
+
 const app = express();
 
 const config = {
@@ -61,4 +67,4 @@ app.post("/scream", (req, res) => {
     });
 });
 
-exports.api = functions.region("asia-south1").https.onRequest(app);
+exports.api = functions.region("asia-east2").https.onRequest(app);
